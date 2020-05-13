@@ -1,0 +1,21 @@
+# rendered with https://sequencediagram.org/
+title DNS Query
+
+participant "1.1.1.1\n:DNS Resolver" as res
+participant "198.41.0.4\n:Root Nameserver" as root
+participant "tld1\n:TLD Nameserver" as tld
+participant "aserv1\n:Authoritaive Nameserver" as aserv
+
+
+entryspacing 0.9
+
+[ -> res: type: "A" record\ndomain: abdo.com
+activate res
+res -> root: TLD server for ".com" ?
+res <- root: go to tld1
+res -> tld: authoriative server for abdo.com ?
+res <- tld: go to aserv1
+res -> aserv: record type: A, domain: abdo.com
+res <- aserv: abdo.com can be found at IP address 207.55.244.11
+[ <- res: answer: 207.55.244.11
+deactivate res
